@@ -12,7 +12,7 @@ resource "google_cloud_run_v2_service" "producer-service" {
 
     containers {
       name = "producer-service"
-      image = "us-central1-docker.pkg.dev/newyeti/images/newyeti-producer:v1.1.6"
+      image = "us-central1-docker.pkg.dev/newyeti/images/newyeti-producer:v1.1.7"
       ports {
         container_port = 4000
       }
@@ -30,11 +30,19 @@ resource "google_cloud_run_v2_service" "producer-service" {
       }
       env {
         name = "KAKFA_BOOTSTRAP_SERVER"
-        value = ""
+        value = "dory.srvs.cloudkafka.com:9094"
+      }
+      env {
+        name = "CLOUDKARAFKA_USERNAME"
+        value = "luzpguyd"
+      }
+      env {
+        name = "CLOUDKARAFKA_PASSWORD"
+        value = "81563338-1874-4574-a88a-a92de06d6e15"
       }
       env {
         name = "SCHEMA_REGISTRY_URI"
-        value = ""
+        value = "https://schemaregistry.cloudkarafka.com"
       }
       env {
         name = "MONGO_DB_URI"

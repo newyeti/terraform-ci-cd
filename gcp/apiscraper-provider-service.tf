@@ -12,7 +12,19 @@ resource "google_cloud_run_v2_service" "producer-service" {
 
     containers {
       name = "producer-service"
-      image = "us-central1-docker.pkg.dev/newyeti/images/newyeti-producer:v1.1.7"
+      image = "us-central1-docker.pkg.dev/newyeti/images/newyeti-producer:v1.2.7"
+
+      resources {
+        limits = {
+          # CPU usage limit
+          # https://cloud.google.com/run/docs/configuring/cpu
+          #cpu = "1000m" # 1 vCPU
+
+          # Memory usage limit (per container)
+          # https://cloud.google.com/run/docs/configuring/memory-limits
+          memory = "1024Mi"
+        }
+      } 
       ports {
         container_port = 4000
       }
@@ -21,12 +33,20 @@ resource "google_cloud_run_v2_service" "producer-service" {
         value = "gcp"
       }
       env {
+        name = "SPRING_APPLICATION_JSON"
+        value = "{\"kafka.producer.send.enabled\":\"false\"}"
+      }
+      env {
         name = "CONFIG_SERVER_URI"
         value = "https://config-service-hrvpv77zoa-uc.a.run.app"
       }
       env {
         name = "CONFIG_SERVER_PORT"
         value = "443"
+      }
+      env {
+        name = "MONGODB_URI"
+        value = "mongodb+srv://devuser:devpassword@uefa-cluster-0.rj6sj7h.mongodb.net/football"
       }
       env {
         name = "KAKFA_BOOTSTRAP_SERVER"
@@ -44,10 +64,7 @@ resource "google_cloud_run_v2_service" "producer-service" {
         name = "SCHEMA_REGISTRY_URI"
         value = "https://schemaregistry.cloudkarafka.com"
       }
-      env {
-        name = "MONGO_DB_URI"
-        value = ""
-      }
+     
       env {
         name = "OTEL_METRICS_EXPORTER"
         value = "none"

@@ -2,6 +2,7 @@ resource "google_cloud_run_v2_service" "producer-service" {
   project = var.project
   name     = "producer-service"
   location = var.region
+  
 
   template {
 
@@ -12,7 +13,7 @@ resource "google_cloud_run_v2_service" "producer-service" {
 
     containers {
       name = "producer-service"
-      image = "us-central1-docker.pkg.dev/newyeti/images/newyeti-producer:v1.2.7"
+      image = "us-central1-docker.pkg.dev/newyeti/images/newyeti-producer:v1.3.7"
 
       resources {
         limits = {
@@ -45,9 +46,38 @@ resource "google_cloud_run_v2_service" "producer-service" {
         value = "443"
       }
       env {
-        name = "MONGODB_URI"
-        value = "mongodb+srv://devuser:devpassword@uefa-cluster-0.rj6sj7h.mongodb.net/football"
+        name = "MONGODB_HOST"
+        value = "uefa-cluster-0.rj6sj7h.mongodb.net"
       }
+      env {
+        name = "MONGODB_USERNAME"
+        value = "cruser"
+      }
+       env {
+        name = "MONGODB_DATABASE"
+        value = "football"
+      }
+      env {
+        name = "MONGODB_PASSWORD"
+        value_source {
+          secret_key_ref {
+            version = "latest"
+            secret = "mongodb-password"
+          }
+        }
+      }
+     
+      env {
+        name = "RAPID_API_KEY_1"
+        value = "U4y3LniAIdmsh1SryySGibO7k8ELp1syFPvjsnpHOQNWAvpJAk"
+        # value_source {
+        #   secret_key_ref {
+        #     version = "1"
+        #     secret = "RAPID_API_KEY_1"
+        #   }
+        # }
+      }
+
       env {
         name = "KAKFA_BOOTSTRAP_SERVER"
         value = "dory.srvs.cloudkafka.com:9094"
@@ -58,7 +88,7 @@ resource "google_cloud_run_v2_service" "producer-service" {
       }
       env {
         name = "CLOUDKARAFKA_PASSWORD"
-        value = "81563338-1874-4574-a88a-a92de06d6e15"
+        value = ""
       }
       env {
         name = "SCHEMA_REGISTRY_URI"
@@ -73,6 +103,7 @@ resource "google_cloud_run_v2_service" "producer-service" {
         name = "OTEL_TRACES_EXPORTER"
         value = "none"
       }
+
     }
   }
   traffic {

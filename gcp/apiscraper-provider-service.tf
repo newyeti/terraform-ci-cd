@@ -13,7 +13,7 @@ resource "google_cloud_run_v2_service" "producer-service" {
 
     containers {
       name = "producer-service"
-      image = "us-central1-docker.pkg.dev/newyeti/images/newyeti-producer:v0.3.2"
+      image = "us-central1-docker.pkg.dev/newyeti/images/newyeti-producer:${var.PS_GIT_TAG}"
 
       resources {
         limits = {

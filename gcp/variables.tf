@@ -63,3 +63,8 @@ variable "subnetwork_params" {
     region = "us-central1"
   }
 }
+
+variable "PS_GIT_TAG" {
+  type = string
+  description = "This is a git tag of artifact to be deployed"
+}

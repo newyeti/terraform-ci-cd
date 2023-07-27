@@ -5,34 +5,21 @@ provider "google" {
   zone = var.zone
 }
 
-resource "google_compute_instance" "my_instance" {
-  name = var.vm_params.name
-  machine_type = var.vm_params.machine_type
-  zone = var.vm_params.zone
-  allow_stopping_for_update = var.vm_params.allow_stopping_for_update
-
-  boot_disk {
-    initialize_params {
-      image = var.os_image
-    }
-  }
-
-  network_interface {
-    network = google_compute_network.terraform_network.self_link
-    subnetwork = google_compute_subnetwork.terraform_subnetwork.self_link
-    access_config {
-    }
+data "google_iam_policy" "admin" {
+  binding {
+    role = "roles/viewer"
+    members = [
+      "user:sachindra.maharjan4@gmail.com",
+    ]
   }
 }
 
-resource "google_compute_network" "terraform_network" {
-  name = var.network_params.name
-  auto_create_subnetworks = var.network_params.auto_create_subnetworks
-}
 
-resource "google_compute_subnetwork" "terraform_subnetwork" {
-  name = var.subnetwork_params.name
-  ip_cidr_range = var.subnetwork_params.ip_cidr_range
-  region = var.subnetwork_params.region
-  network = google_compute_network.terraform_network.id
+data "google_iam_policy" "public-1" {
+  binding {
+    role = "roles/run.invoker"
+    members = [
+      "allUsers",
+    ]
+  }
 }

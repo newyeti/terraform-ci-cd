@@ -13,7 +13,7 @@ resource "google_cloud_run_v2_service" "producer-service" {
 
     containers {
       name = "producer-service"
-      image = "us-central1-docker.pkg.dev/newyeti/images/newyeti-producer:v1.3.7"
+      image = "us-central1-docker.pkg.dev/newyeti/images/newyeti-producer:v0.3.2"
 
       resources {
         limits = {
@@ -68,14 +68,33 @@ resource "google_cloud_run_v2_service" "producer-service" {
       }
      
       env {
-        name = "RAPID_API_KEY_1"
-        value = "U4y3LniAIdmsh1SryySGibO7k8ELp1syFPvjsnpHOQNWAvpJAk"
-        # value_source {
-        #   secret_key_ref {
-        #     version = "1"
-        #     secret = "RAPID_API_KEY_1"
-        #   }
-        # }
+        name = "RAPID_API_KEYS"
+        value_source {
+          secret_key_ref {
+            version = "1"
+            secret = "rapid-api-keys"
+          }
+        }
+      }
+
+      env {
+        name = "REDIS_HOST"
+        value = "gusc1-sought-glider-30297.upstash.io"
+      }
+
+      env {
+        name = "REDIS_PORT"
+        value = "30297"
+      }
+
+      env {
+        name = "REDIS_PASSWORD"
+        value_source {
+          secret_key_ref {
+            version = "latest"
+            secret = "redis-password"
+          }
+        }
       }
 
       env {

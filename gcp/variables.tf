@@ -64,7 +64,7 @@ variable "subnetwork_params" {
   }
 }
 
-variable "PS_GIT_TAG" {
+variable "ps_git_tag" {
   type = string
   description = "This is a git tag of artifact to be deployed"
 }

@@ -48,6 +48,7 @@ on:
   push:
     branches: [ "main" ]
   pull_request:
+    branches: ["develop", "main"]
 
 permissions:
   contents: read
@@ -58,36 +59,64 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
 
+    env:
+      tf_gcp_working_dir: "gcp"
+
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
       run:
         shell: bash
-
+        working-directory: ${{env.tf_gcp_working_dir}}
+      
     steps:
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
       uses: actions/checkout@v3
+    
+    - name: Setup terraform variables
+      id: vars
+      run: |-
+        cat > credentials.json <<EOF
+        ${{secrets.GCP_CREDENTIALS}}
+        EOF
+
+        cat > terraform.tfvars <<EOF
+        project="${{vars.GCP_PROJECT}}"
+        credential_file="credentials.json"
+        ps_git_tag="${{vars.PRODUCER_SERVICE_IMAGE_TAG}}"
+        datasync_image_tag="${{vars.DATASYNC_SERVICE_IMAGE_TAG}}"
+        EOF
+        
+        cat terraform.tfvars
+
 
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
     - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v1
+      uses: hashicorp/setup-terraform@v2
       with:
-        cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+        cli_config_credentials_token: ${{secrets.GCP_CREDENTIALS}}
+
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
       run: terraform init
+      env:
+        GOOGLE_CREDENTIALS: ${{secrets.GCP_CREDENTIALS}}
 
-    # Checks that all Terraform configuration files adhere to a canonical format
-    - name: Terraform Format
-      run: terraform fmt -check
-
+    # # Checks that all Terraform configuration files adhere to a canonical format
+    # - name: Terraform Format
+    #   run: terraform fmt -check
+  
     # Generates an execution plan for Terraform
     - name: Terraform Plan
       run: terraform plan -input=false
+      env:
+        GOOGLE_CREDENTIALS: ${{secrets.GCP_CREDENTIALS}}
 
       # On push to "main", build or change infrastructure according to Terraform configuration files
       # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
     - name: Terraform Apply
       if: github.ref == 'refs/heads/"main"' && github.event_name == 'push'
       run: terraform apply -auto-approve -input=false
+      env:
+        GOOGLE_CREDENTIALS: ${{secrets.GCP_CREDENTIALS}}

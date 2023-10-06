@@ -48,6 +48,7 @@ on:
   push:
     branches: [ "main" ]
   pull_request:
+    branches: ["develop", "main"]
 
 permissions:
   contents: read
@@ -67,6 +68,9 @@ jobs:
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
       uses: actions/checkout@v3
+    
+    - name: Change Directory
+      run: cd gcp
 
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
     - name: Setup Terraform

@@ -89,8 +89,8 @@ jobs:
         
         cat terraform.tfvars
 
-        cat ${{github.event_name}}
-        cat ${{github.ref}}
+        echo ${{github.event_name}}
+        echo ${{github.ref}}
 
 
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token

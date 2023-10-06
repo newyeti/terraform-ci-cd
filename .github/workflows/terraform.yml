@@ -79,8 +79,8 @@ jobs:
         cat > terraform.tfvars <<EOF
         project="${{vars.GCP_PROJECT}}"
         credential=${{secrets.GCP_CREDENTIALS}}
-        ps_git_tag=${{vars.PRODUCER_SERVICE_IMAGE_TAG}}
-        datasync_image_tag=${{vars.DATASYNC_SERVICE_IMAGE_TAG}}
+        ps_git_tag="${{vars.PRODUCER_SERVICE_IMAGE_TAG}}"
+        datasync_image_tag="${{vars.DATASYNC_SERVICE_IMAGE_TAG}}"
 
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
     - name: Setup Terraform

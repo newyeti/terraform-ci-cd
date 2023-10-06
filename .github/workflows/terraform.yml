@@ -77,7 +77,7 @@ jobs:
       id: vars
       run: |-
         cat > credentials.json <<EOF
-        test
+        ${{secrets.GCP_CREDENTIALS}}
         EOF
 
         cat > terraform.tfvars <<EOF

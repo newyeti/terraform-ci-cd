@@ -76,13 +76,19 @@ jobs:
     - name: Setup terraform variables
       id: vars
       run: |-
+        cat > credentials.json <<EOF
+          ${{secrets.GCP_CREDENTIALS}}
+        EOF
+
         cat > terraform.tfvars <<EOF
         project="${{vars.GCP_PROJECT}}"
-        credential=${{secrets.GCP_CREDENTIALS}}
+        credential="credintials.json"
         ps_git_tag="${{vars.PRODUCER_SERVICE_IMAGE_TAG}}"
         datasync_image_tag="${{vars.DATASYNC_SERVICE_IMAGE_TAG}}"
         EOF
         
+        cat credentials.json
+        cat terraform.tfvars
 
 
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token

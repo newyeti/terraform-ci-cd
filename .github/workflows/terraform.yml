@@ -82,12 +82,11 @@ jobs:
 
         cat > terraform.tfvars <<EOF
         project="${{vars.GCP_PROJECT}}"
-        credential="credintials.json"
+        credential_file="credentials.json"
         ps_git_tag="${{vars.PRODUCER_SERVICE_IMAGE_TAG}}"
         datasync_image_tag="${{vars.DATASYNC_SERVICE_IMAGE_TAG}}"
         EOF
         
-        cat credentials.json
         cat terraform.tfvars
 
 

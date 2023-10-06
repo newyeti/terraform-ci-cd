@@ -67,6 +67,8 @@ variable "subnetwork_params" {
 variable "ps_git_tag" {
   type = string
   description = "This is a git tag of artifact to be deployed"
+
+  default = "latest"
 }
 
 variable "datasync_image_tag" {

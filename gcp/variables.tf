@@ -71,7 +71,7 @@ variable "ps_git_tag" {
   default = "latest"
 }
 
-variable "datasync_image_tag" {
+variable "footysync_image_tag" {
   type = string
   description = "This is a image tag for datasync service"
 

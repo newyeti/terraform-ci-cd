@@ -84,7 +84,7 @@ jobs:
         project="${{vars.GCP_PROJECT}}"
         credential_file="credentials.json"
         ps_git_tag="${{vars.PRODUCER_SERVICE_IMAGE_TAG}}"
-        datasync_image_tag="${{vars.DATASYNC_SERVICE_IMAGE_TAG}}"
+        footysync_image_tag="${{vars.FOOTYSYNC_SERVICE_IMAGE_TAG}}"
         EOF
 
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token

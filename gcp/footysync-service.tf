@@ -26,23 +26,23 @@ resource "google_cloud_run_v2_service" "footysync-service" {
 
       env {
         name = "MONGO"
-        value = data.extarnal.env.result["MONGO"]
+        value = data.external.env.result["MONGO"]
       }
       env {
         name = "REDIS"
-        value = data.extarnal.env.result["REDIS"]
+        value = data.external.env.result["REDIS"]
       }
       env {
         name = "KAFKA"
-        value = data.extarnal.env.result["KAFKA"]
+        value = data.external.env.result["KAFKA"]
       }
       env {
         name = "BIGQUERY"
-        value = data.extarnal.env.result["BIGQUERY"]
+        value = data.external.env.result["BIGQUERY"]
       }
       env {
         name = "RAPID_API"
-        value = data.extarnal.env.result["RAPID_API"]
+        value = data.external.env.result["RAPID_API"]
       }
 
     }

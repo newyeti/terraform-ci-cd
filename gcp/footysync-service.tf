@@ -21,7 +21,7 @@ resource "google_cloud_run_v2_service" "footysync-service" {
         }
       } 
       ports {
-        container_port = 80
+        container_port = 8000
       }
     }
   }

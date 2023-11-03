@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 mongo_credentials=`gcloud secrets versions access latest --secret=newyeti_mongo_credentials`
 bq_credentials=`gcloud secrets versions access latest --secret=newyeti_bq_credentials`

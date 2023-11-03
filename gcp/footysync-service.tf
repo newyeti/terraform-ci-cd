@@ -23,12 +23,38 @@ resource "google_cloud_run_v2_service" "footysync-service" {
       ports {
         container_port = 80
       }
+
+      env {
+        name = "MONGO"
+        value = data.extarnal.env.result["MONGO"]
+      }
+      env {
+        name = "REDIS"
+        value = data.extarnal.env.result["REDIS"]
+      }
+      env {
+        name = "KAFKA"
+        value = data.extarnal.env.result["KAFKA"]
+      }
+      env {
+        name = "BIGQUERY"
+        value = data.extarnal.env.result["BIGQUERY"]
+      }
+      env {
+        name = "RAPID_API"
+        value = data.extarnal.env.result["RAPID_API"]
+      }
+
     }
   }
   traffic {
     type = "TRAFFIC_TARGET_ALLOCATION_TYPE_LATEST"
     percent = 100
   }
+}
+
+data "external" "env" {
+  program = ["${path.module}/env.sh"]
 }
 
 resource "google_cloud_run_v2_service_iam_policy" "footysync-service-policy" {

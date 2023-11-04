@@ -23,7 +23,7 @@ if [[ -z "${app_env}" ]]; then
     app_env="dev"
 fi
 
-echo "Setting '${app_env}' envrionment variables"
+# echo "Setting '${app_env}' envrionment variables"
 
 env_infra="dev"
 env_mongo="dev"
@@ -76,13 +76,5 @@ API_KEYS_JSON_FMT='{"API_KEYS": "%s"}'
 RAPID_API=$(printf "${API_KEYS_JSON_FMT}" "${rapid_api_keys}" ) > $env_file
 
 cat <<EOF
-{
-  "MONGO": "$MONGO",
-  "BIGQUERY": "$BIGQUERY",
-  "REDIS": "$REDIS",
-  "KAFKA": "$KAFKA",
-  "RAPID_API": "$RAPID_API"
-}
+  $KAFKA
 EOF
-
-echo "Setting app_env variables completed."

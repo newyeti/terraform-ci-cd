@@ -25,15 +25,15 @@ resource "google_cloud_run_v2_service" "footysync-service" {
       }
 
       env {
-        name = "MONGO_HOSTNAME"
+        name = "MONGO.MONGO_HOSTNAME"
         value = "uefa-cluster-0.rj6sj7h.mongodb.net"
       }
       env {
-        name = "MONGO_USERNAME"
+        name = "MONGO.MONGO_USERNAME"
         value = "cruser"
       }
       env {
-        name = "MONGO_PASSWORD"
+        name = "MONGO.MONGO_PASSWORD"
         value_source {
           secret_key_ref {
             version = "latest"
@@ -42,12 +42,12 @@ resource "google_cloud_run_v2_service" "footysync-service" {
         }
       }
       env {
-        name = "MONGO_DB"
+        name = "MONGO.MONGO_DB"
         value = "football"
       }
 
       env {
-        name = "BIGQUERY_CREDENTIAL"
+        name = "BIGQUERY.BIGQUERY_CREDENTIAL"
         value_source {
           secret_key_ref {
             version = "latest"
@@ -57,17 +57,17 @@ resource "google_cloud_run_v2_service" "footysync-service" {
       }
 
       env {
-        name = "REDIS_HOST"
+        name = "REDIS.REDIS_HOST"
         value = "gusc1-sought-glider-30297.upstash.io"
       }
 
       env {
-        name = "REDIS_PORT"
+        name = "REDIS.REDIS_PORT"
         value = "30297"
       }
 
       env {
-        name = "REDIS_PASSWORD"
+        name = "REDIS.REDIS_PASSWORD"
         value_source {
           secret_key_ref {
             version = "latest"
@@ -76,20 +76,20 @@ resource "google_cloud_run_v2_service" "footysync-service" {
         }
       }
       env {
-        name = "REDIS_SSL_ENABLED"
+        name = "REDIS.REDIS_SSL_ENABLED"
         value = "True"
       }
 
       env {
-        name = "KAFKA_BOOTSTRAP_SERVERS"
+        name = "KAFKA.KAFKA_BOOTSTRAP_SERVERS"
         value = "legible-reptile-12962-us1-kafka.upstash.io:9092"
       }
       env {
-        name = "KAFKA_USERNAME"
+        name = "KAFKA.KAFKA_USERNAME"
         value = "bGVnaWJsZS1yZXB0aWxlLTEyOTYyJDDCdDTjhIG87z8kcwB8RDj4ycMf835NAsA"
       }
       env {
-        name = "KAFKA_PASSWORD"
+        name = "KAFKA.KAFKA_PASSWORD"
         value_source {
           secret_key_ref {
             version = "1"
@@ -99,7 +99,7 @@ resource "google_cloud_run_v2_service" "footysync-service" {
       }
 
       env {
-        name = "RAPID_API_KEYS"
+        name = "rapid_api.RAPID_API_KEYS"
         value_source {
           secret_key_ref {
             version = "1"
@@ -117,13 +117,6 @@ resource "google_cloud_run_v2_service" "footysync-service" {
   }
 }
 
-# data "external" "env" {
-#   program = ["${path.module}/env.sh"]
-# }
-
-# output "name" {
-#   value = data.external.env.result
-# }
 
 resource "google_cloud_run_v2_service_iam_policy" "footysync-service-policy" {
   project = google_cloud_run_v2_service.footysync-service.project

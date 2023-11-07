@@ -21,7 +21,7 @@ resource "google_cloud_run_v2_service" "footysync-service" {
         }
       } 
       ports {
-        container_port = 80
+        container_port = 8000
       }
 
       env{
@@ -31,16 +31,6 @@ resource "google_cloud_run_v2_service" "footysync-service" {
 
       env {
         name = "INFRA"
-        value_source {
-          secret_key_ref {
-            version = "latest"
-            secret = "footy_cred"
-          }
-        }
-      }
-
-      env {
-        name = "infra"
         value_source {
           secret_key_ref {
             version = "latest"
@@ -58,17 +48,6 @@ resource "google_cloud_run_v2_service" "footysync-service" {
           }
         }
       }
-
-      env {
-        name = "rapid_api"
-        value_source {
-          secret_key_ref {
-            version = "latest"
-            secret = "rapid-api-keys"
-          }
-        }
-      }
-
 
     }
   }

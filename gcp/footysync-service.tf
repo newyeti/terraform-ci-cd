@@ -43,7 +43,7 @@ resource "google_cloud_run_v2_service" "footysync-service" {
         name = "RAPID_API_KEYS"
         value_source {
           secret_key_ref {
-            version = "2"
+            version = "latest"
             secret = "rapid-api-keys"
           }
         }

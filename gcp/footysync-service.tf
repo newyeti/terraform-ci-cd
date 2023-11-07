@@ -38,9 +38,29 @@ resource "google_cloud_run_v2_service" "footysync-service" {
           }
         }
       }
+
+      env {
+        name = "infra"
+        value_source {
+          secret_key_ref {
+            version = "latest"
+            secret = "footy_cred"
+          }
+        }
+      }
       
       env {
         name = "RAPID_API"
+        value_source {
+          secret_key_ref {
+            version = "latest"
+            secret = "rapid-api-keys"
+          }
+        }
+      }
+
+      env {
+        name = "rapid_api"
         value_source {
           secret_key_ref {
             version = "latest"

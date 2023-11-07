@@ -1,3 +1,11 @@
+terraform {
+  backend "gcs" {
+    bucket  = "newyeti-tf-state"
+    prefix  = "terraform/state"
+  }
+}
+
+
 provider "google" {
   project = var.project
   credentials = file(var.credential_file)

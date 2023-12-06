@@ -75,6 +75,6 @@ variable "footysync_image_tag" {
   type = string
   description = "This is a image tag for datasync service"
 
-  default = "v0.1.1"
+  default = "latest"
   
 }

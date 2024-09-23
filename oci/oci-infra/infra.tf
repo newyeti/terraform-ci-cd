@@ -154,7 +154,7 @@ resource "oci_core_subnet" "vcn_public_subnet" {
 
 resource "oci_containerengine_cluster" "k8s_cluster" {
   compartment_id     = var.compartment_id
-  kubernetes_version = "v1.27.2"
+  kubernetes_version = "v1.30.1"
   name               = "footy-k8s-cluster"
   vcn_id             = module.vcn.vcn_id
 
@@ -183,7 +183,7 @@ data "oci_identity_availability_domains" "ads" {
 resource "oci_containerengine_node_pool" "k8s_node_pool" {
   cluster_id         = oci_containerengine_cluster.k8s_cluster.id
   compartment_id     = var.compartment_id
-  kubernetes_version = "v1.27.2"
+  kubernetes_version = "v1.30.1"
   name               = "footy-k8s-node-pool"
   node_config_details {
     placement_configs {
@@ -205,12 +205,12 @@ resource "oci_containerengine_node_pool" "k8s_node_pool" {
   node_shape = "VM.Standard.A1.Flex"
 
   node_shape_config {
-    memory_in_gbs = 6
-    ocpus         = 1
+    memory_in_gbs = 12
+    ocpus         = 2
   }
 
   node_source_details {
-    image_id    = "ocid1.image.oc1.iad.aaaaaaaawyd3zy32heqrtektg62didbxuf2saywkvc7q3xjxadsh4ai2dseq"
+    image_id    = "ocid1.image.oc1.iad.aaaaaaaaraxxl6yrjswsxem67tmf4s3ihx44xbfq2ceqlp7rgcoroqinopfa"
     source_type = "image"
   }
 

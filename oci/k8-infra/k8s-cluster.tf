@@ -54,7 +54,7 @@ resource "oci_network_load_balancer_listener" "footy_nlb_listener" {
   default_backend_set_name = oci_network_load_balancer_backend_set.footy_nlb_backend_set.name
   name                     = "footy-k8s-nlb-listener"
   network_load_balancer_id = oci_network_load_balancer_network_load_balancer.footy_nlb.id
-  port                     = "80"
+  port                     = "443"
   protocol                 = "TCP"
 }
 

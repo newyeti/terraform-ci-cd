@@ -125,10 +125,22 @@ resource "oci_core_security_list" "public_subnet_sl" {
     source_type = "CIDR_BLOCK"
     protocol    = "6"
     tcp_options {
-      min = 443
-      max = 443
+      min = 6443
+      max = 6443
     }
   }
+
+  ingress_security_rules {
+    protocol    = "6"
+    source      = "0.0.0.0/0"
+    source_type = "CIDR_BLOCK"
+    stateless   = false
+
+    tcp_options {
+      max = 443
+      min = 443
+    }
+  } 
 }
 
 resource "oci_core_subnet" "vcn_private_subnet" {

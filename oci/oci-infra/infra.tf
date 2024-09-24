@@ -125,8 +125,8 @@ resource "oci_core_security_list" "public_subnet_sl" {
     source_type = "CIDR_BLOCK"
     protocol    = "6"
     tcp_options {
-      min = 6443
-      max = 6443
+      min = 443
+      max = 443
     }
   }
 }

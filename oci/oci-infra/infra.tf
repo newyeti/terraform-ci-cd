@@ -195,7 +195,7 @@ data "oci_identity_availability_domains" "ads" {
 resource "oci_containerengine_node_pool" "k8s_node_pool" {
   cluster_id         = oci_containerengine_cluster.k8s_cluster.id
   compartment_id     = var.compartment_id
-  kubernetes_version = "v1.30.1"
+  kubernetes_version = "v1.31.1"
   name               = "footy-k8s-node-pool"
   node_config_details {
     placement_configs {

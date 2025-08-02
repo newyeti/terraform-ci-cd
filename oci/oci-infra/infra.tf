@@ -166,7 +166,7 @@ resource "oci_core_subnet" "vcn_public_subnet" {
 
 resource "oci_containerengine_cluster" "k8s_cluster" {
   compartment_id     = var.compartment_id
-  kubernetes_version = "v1.30.1"
+  kubernetes_version = "v1.31.10"
   name               = "footy-k8s-cluster"
   vcn_id             = module.vcn.vcn_id
 
